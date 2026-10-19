@@ -20,7 +20,8 @@ from flask import (Flask, Response, abort, flash, g, redirect, render_template,
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
 EMBED = os.environ.get("EMBED_DEMO") == "1"  # demo di dalam iframe situs portofolio (lintas-situs) butuh SameSite=None + HTTPS
-app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="None" if EMBED else "Lax", SESSION_COOKIE_SECURE=EMBED)
+app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="None" if EMBED else "Lax", SESSION_COOKIE_SECURE=EMBED,
+                  SESSION_COOKIE_NAME=os.environ.get("SESSION_COOKIE_NAME", "session"))  # nama unik bila beberapa app dalam satu domain
 app.config["DB_PATH"] = os.environ.get("DB_PATH", os.path.join(os.path.dirname(__file__), "inventori.db"))
 
 TIPE = {"masuk": "Barang masuk", "keluar": "Barang keluar", "koreksi": "Koreksi (set stok)"}
