@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} produk{% endblock %}
+{% block body %}
+<h1>{{ 'Edit produk' if edit else 'Produk baru' }}</h1>
+<form method="post" class="panel form">
+  <input type="hidden" name="_csrf" value="{{ csrf() }}">
+  <div class="two">
+    <label>SKU<input name="sku" required maxlength="30" value="{{ v.sku }}"></label>
+    <label>Kategori<input name="kategori" maxlength="40" value="{{ v.kategori }}" placeholder="Umum"></label>
+  </div>
+  <label>Nama produk<input name="nama" required maxlength="100" value="{{ v.nama }}"></label>
+  <div class="two">
+    <label>Harga beli (Rp)<input type="number" name="harga_beli" min="0" required value="{{ v.harga_beli }}"></label>
+    <label>Harga jual (Rp)<input type="number" name="harga_jual" min="0" required value="{{ v.harga_jual }}"></label>
+  </div>
+  <div class="two">
+    {% if not edit %}<label>Stok awal<input type="number" name="stok" min="0" value="{{ v.stok or 0 }}"></label>{% endif %}
+    <label>Stok minimum (peringatan)<input type="number" name="stok_min" min="0" value="{{ v.stok_min if v.stok_min is not none and v.stok_min!='' else 5 }}"></label>
+  </div>
+  {% if edit %}<p class="muted">Jumlah stok diubah lewat mutasi di halaman detail agar tercatat.</p>{% endif %}
+  <button class="btn">Simpan</button>
+  <a class="btn ghost" href="{{ url_for('produk_detail', pid=pid) if edit else url_for('produk_list') }}">Batal</a>
+</form>
+{% endblock %}

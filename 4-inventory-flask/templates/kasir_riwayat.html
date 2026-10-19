@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Transaksi hari ini{% endblock %}
+{% block body %}
+<h1>Transaksi hari ini</h1>
+<div class="kpis">
+  <div><small>Transaksi</small><b>{{ n }}</b></div>
+  <div><small>Total penjualan</small><b>{{ total|rp }}</b></div>
+  <div><small>Tunai (di laci)</small><b>{{ per.tunai|rp }}</b></div>
+  <div><small>QRIS + Transfer</small><b>{{ (per.qris + per.transfer)|rp }}</b></div>
+</div>
+<div class="scroll"><table class="grid">
+  <tr><th>Kode</th><th>Waktu</th><th>Kasir</th><th>Metode</th><th class="num">Total</th><th></th></tr>
+  {% for r in rows %}<tr class="{{ 'voided' if r.status=='batal' }}"><td class="mono"><a href="{{ url_for('struk', sid=r.id) }}">{{ r.kode }}</a></td>
+    <td class="mono">{{ r.waktu[11:16] }}</td><td>{{ r.kasir }}</td><td>{{ METODE[r.metode] }}</td><td class="num">{{ r.total|rp }}</td>
+    <td>{% if r.status=='batal' %}<span class="t t-keluar">batal</span>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">Belum ada transaksi hari ini.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Masuk{% endblock %}
+{% block anon %}
+<div class="login">
+  <b class="brand">▦ Stokku</b>
+  <h1>Masuk</h1>
+  {% for c,m in get_flashed_messages(with_categories=true) %}<p class="flash {{ c }}">{{ m }}</p>{% endfor %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf() }}">
+    <label>Username<input name="username" required autofocus autocomplete="username" placeholder="admin atau username kasir"></label>
+    <label>Kata sandi<input type="password" name="password" required autocomplete="current-password"></label>
+    <button class="btn">Masuk</button>
+  </form>
+</div>
+{% endblock %}

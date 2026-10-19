@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Pesanan diterima{% endblock %}
+{% block body %}
+<main class="center">
+  <div class="plate big">✅</div>
+  <h1>Terima kasih, {{ p.nama }}!</h1>
+  <p>Pesanan <b>#{{ p.id }}</b> diterima: {{ p.jumlah }} × {{ produk[p.produk][0] }} untuk {{ p.tanggal }}.</p>
+  <p>Total {{ p.total|rp }}. Kami akan menghubungi lewat WhatsApp untuk konfirmasi.</p>
+  <a class="btn" href="{{ url_for('index') }}">Kembali</a>
+</main>
+{% endblock %}

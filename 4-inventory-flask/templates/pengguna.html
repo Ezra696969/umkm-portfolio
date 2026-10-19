@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Pegawai{% endblock %}
+{% block body %}
+<h1>Pegawai kasir</h1>
+<section class="panel"><h2>Tambah akun kasir</h2>
+  <form method="post" action="{{ url_for('pengguna_baru') }}" class="inline">
+    <input type="hidden" name="_csrf" value="{{ csrf() }}">
+    <input name="username" required minlength="3" maxlength="20" placeholder="username" autocomplete="off">
+    <input name="nama" required maxlength="60" placeholder="Nama lengkap">
+    <input type="password" name="password" required minlength="8" placeholder="Kata sandi (min. 8)" autocomplete="new-password">
+    <button class="btn">Tambah</button>
+  </form>
+  <p class="muted">Kasir hanya bisa memakai halaman Kasir dan melihat transaksinya sendiri. Akun <b>admin</b> memakai kata sandi dari <code>ADMIN_PASSWORD</code>.</p>
+</section>
+<div class="scroll"><table class="grid">
+  <tr><th>Username</th><th>Nama</th><th class="num">Transaksi</th><th>Status</th><th>Aksi</th></tr>
+  {% for u in rows %}<tr class="{{ 'voided' if not u.aktif }}"><td class="mono">{{ u.username }}</td><td>{{ u.nama }}</td><td class="num">{{ u.trx }}</td>
+    <td><span class="badge {{ '' if u.aktif else 'zero' }}">{{ 'aktif' if u.aktif else 'nonaktif' }}</span></td>
+    <td class="acts2">
+      <form method="post" action="{{ url_for('pengguna_toggle', uid=u.id) }}"><input type="hidden" name="_csrf" value="{{ csrf() }}"><button class="mini">{{ 'Nonaktifkan' if u.aktif else 'Aktifkan' }}</button></form>
+      <form method="post" action="{{ url_for('pengguna_reset', uid=u.id) }}"><input type="hidden" name="_csrf" value="{{ csrf() }}">
+        <input type="password" name="password" minlength="8" required placeholder="sandi baru" autocomplete="new-password"><button class="mini">Ganti</button></form></td></tr>
+  {% else %}<tr><td colspan="5" class="muted">Belum ada akun kasir.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

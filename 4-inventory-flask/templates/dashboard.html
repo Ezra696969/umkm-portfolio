@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<h1>Dashboard</h1>
+<div class="kpis">
+  <div><small>Jenis produk</small><b>{{ r.n }}</b></div>
+  <div><small>Total unit</small><b>{{ '{:,}'.format(r.unit).replace(',', '.') }}</b></div>
+  <div><small>Nilai stok (modal)</small><b>{{ r.nilai|rp }}</b></div>
+  <div class="{{ 'warn' if r.rendah }}"><small>Stok menipis</small><b>{{ r.rendah }}</b><em>{{ r.habis }} habis</em></div>
+</div>
+<div class="kpis sales">
+  <div><small>Penjualan hari ini</small><b>{{ hari.omzet|rp }}</b></div>
+  <div><small>Transaksi hari ini</small><b>{{ hari.n }}</b></div>
+  <a class="btn" href="{{ url_for('kasir') }}">Buka kasir →</a>
+  <a class="btn ghost" href="{{ url_for('laporan') }}">Laporan penjualan</a>
+</div>
+<div class="cols">
+  <section class="panel">
+    <h2>⚠ Perlu restok</h2>
+    {% for p in low %}
+    <a class="row" href="{{ url_for('produk_detail', pid=p.id) }}"><span>{{ p.nama }}<small>{{ p.sku }}</small></span>
+      <span class="badge {{ 'zero' if p.stok==0 else 'low' }}">{{ p.stok }} / min {{ p.stok_min }}</span></a>
+    {% else %}<p class="muted">Semua stok aman.</p>{% endfor %}
+  </section>
+  <section class="panel">
+    <h2>Nilai stok per kategori</h2>
+    {% set mx = (kat|map(attribute='nilai')|max) if kat else 1 %}
+    {% for k in kat %}
+    <div class="bar"><span>{{ k.kategori }}</span><i style="width:{{ (k.nilai / (mx or 1) * 100)|round|int }}%"></i><b>{{ k.nilai|rp }}</b></div>
+    {% else %}<p class="muted">Belum ada data.</p>{% endfor %}
+  </section>
+</div>
+<section class="panel">
+  <h2>Aktivitas terbaru</h2>
+  <div class="scroll"><table>
+    {% for m in recent %}<tr><td class="mono">{{ m.waktu|tgl }}</td><td>{{ m.nama }}</td>
+      <td><span class="t t-{{ m.tipe }}">{{ m.tipe }}</span></td><td class="num">{{ m.jumlah }}</td><td class="num muted">→ {{ m.stok_akhir }}</td></tr>
+    {% else %}<tr><td class="muted">Belum ada aktivitas.</td></tr>{% endfor %}
+  </table></div>
+</section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Admin pesanan{% endblock %}
+{% block body %}
+<header class="bar"><b class="brand">Admin <i>Pesanan</i></b>
+  <form method="post" action="{{ url_for('logout') }}"><input type="hidden" name="_csrf" value="{{ csrf() }}"><button class="link">Keluar</button></form>
+</header>
+<main class="adm">
+  <div class="filters">
+    <a class="{{ 'on' if not st }}" href="{{ url_for('admin') }}">Semua</a>
+    {% for s in status %}<a class="{{ 'on' if st==s }}" href="{{ url_for('admin', status=s) }}">{{ s }}</a>{% endfor %}
+    <a class="csv" href="{{ url_for('export') }}">⬇ CSV</a>
+  </div>
+  <p>{{ rows|length }} pesanan · omzet (tanpa batal): <b>{{ omzet|rp }}</b></p>
+  {% for r in rows %}
+  <article class="order s-{{ r.status }}">
+    <div class="oh"><b>#{{ r.id }} {{ r.nama }}</b>
+      <form method="post" action="{{ url_for('set_status', pid=r.id) }}">
+        <input type="hidden" name="_csrf" value="{{ csrf() }}">
+        <select name="status" onchange="this.form.submit()">{% for s in status %}<option {{ 'selected' if s==r.status }}>{{ s }}</option>{% endfor %}</select>
+      </form></div>
+    <p>{{ r.jumlah }} × {{ produk[r.produk][0] if r.produk in produk else r.produk }} = <b>{{ r.total|rp }}</b></p>
+    <p>📅 {{ r.tanggal }} · 📍 {{ r.alamat }}</p>
+    <p>📱 <a href="https://wa.me/{{ '62' + r.wa[1:] if r.wa.startswith('0') else r.wa }}" target="_blank" rel="noopener">{{ r.wa }}</a>
+       · <small>masuk {{ r.dibuat.replace('T',' ') }}</small></p>
+    {% if r.catatan %}<p class="cat">📝 {{ r.catatan }}</p>{% endif %}
+  </article>
+  {% else %}<p class="empty">Belum ada pesanan.</p>{% endfor %}
+</main>
+{% endblock %}

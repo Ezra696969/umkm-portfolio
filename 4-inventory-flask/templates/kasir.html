@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Kasir{% endblock %}
+{% block body %}
+<div class="pos">
+  <section class="catalog">
+    <input id="cari" type="search" placeholder="Cari produk / SKU…" autocomplete="off">
+    <div class="chips" id="chips"></div>
+    <div class="items" id="items"></div>
+  </section>
+  <section class="cart panel">
+    <h2>Keranjang</h2>
+    <div id="lines" class="lines"><p class="muted">Klik produk untuk menambah.</p></div>
+    <div class="sum"><span>Total</span><b id="total" class="mono">Rp0</b></div>
+    <form method="post" action="{{ url_for('bayar') }}" id="pay">
+      <input type="hidden" name="_csrf" value="{{ csrf() }}">
+      <input type="hidden" name="keranjang" id="keranjang">
+      <div class="seg" id="seg">
+        {% for k,l in METODE.items() %}<label><input type="radio" name="metode" value="{{ k }}" {{ 'checked' if k=='tunai' }}><span>{{ l }}</span></label>{% endfor %}
+      </div>
+      <div id="cash">
+        <input type="number" name="bayar" id="bayar" min="0" placeholder="Uang diterima (Rp)" inputmode="numeric">
+        <div class="quick" id="quick"></div>
+        <p class="kembali">Kembali: <b id="kembali" class="mono">Rp0</b></p>
+      </div>
+      <button class="btn big" id="go" disabled>Bayar</button>
+      <button type="button" class="btn ghost" id="clear">Kosongkan</button>
+    </form>
+  </section>
+</div>
+<script>
+const P={{ prods|tojson }};
+const rp=n=>'Rp'+Math.round(n).toLocaleString('id-ID');
+const cart={};let kat='';
+const $=id=>document.getElementById(id);
+function list(){
+  const q=$('cari').value.toLowerCase();
+  $('items').innerHTML=P.filter(p=>(!kat||p.kategori==kat)&&(p.nama.toLowerCase().includes(q)||p.sku.toLowerCase().includes(q))).map(p=>
+   `<button type="button" class="it ${p.stok==0?'out0':''}" data-id="${p.id}" ${p.stok==0?'disabled':''}><b>${esc(p.nama)}</b><span class="mono">${rp(p.harga_jual)}</span><small>stok ${p.stok}</small></button>`).join('')||'<p class="muted">Tidak ada produk.</p>';
+}
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const kats=[...new Set(P.map(p=>p.kategori))];
+$('chips').innerHTML=['Semua',...kats].map((k,i)=>`<button type="button" class="${i?'':'on'}" data-k="${i?k:''}">${esc(k)}</button>`).join('');
+$('chips').onclick=e=>{const b=e.target.closest('button');if(!b)return;kat=b.dataset.k;[...$('chips').children].forEach(x=>x.classList.toggle('on',x==b));list()};
+$('cari').oninput=list;
+$('items').onclick=e=>{const b=e.target.closest('.it');if(!b)return;const p=P.find(x=>x.id==b.dataset.id);
+  if((cart[p.id]||0)<p.stok)cart[p.id]=(cart[p.id]||0)+1;draw()};
+function total(){return Object.entries(cart).reduce((s,[id,q])=>s+P.find(p=>p.id==id).harga_jual*q,0)}
+function draw(){
+  const ids=Object.keys(cart);
+  $('lines').innerHTML=ids.length?ids.map(id=>{const p=P.find(x=>x.id==id);return `<div class="ln"><span>${esc(p.nama)}<small class="mono">${rp(p.harga_jual)}</small></span>
+   <span class="qty"><button type="button" data-a="-" data-id="${id}">−</button><b>${cart[id]}</b><button type="button" data-a="+" data-id="${id}">+</button></span>
+   <b class="mono">${rp(p.harga_jual*cart[id])}</b></div>`}).join(''):'<p class="muted">Klik produk untuk menambah.</p>';
+  upd();
+}
+$('lines').onclick=e=>{const b=e.target.closest('button');if(!b)return;const id=b.dataset.id,p=P.find(x=>x.id==id);
+  if(b.dataset.a=='+'){if(cart[id]<p.stok)cart[id]++}else if(--cart[id]<=0)delete cart[id];draw()};
+const metode=()=>document.querySelector('[name=metode]:checked').value;
+function upd(){
+  const t=total(),tunai=metode()=='tunai',b=+$('bayar').value||0;
+  $('total').textContent=rp(t);$('cash').style.display=tunai?'':'none';
+  $('kembali').textContent=rp(Math.max(0,b-t));
+  $('quick').innerHTML=t?[t,...[20000,50000,100000].filter(x=>x>t)].map(x=>`<button type="button" data-v="${x}">${x==t?'Uang pas':rp(x)}</button>`).join(''):'';
+  $('go').disabled=!t||(tunai&&b<t);
+  $('keranjang').value=JSON.stringify(Object.entries(cart).map(([id,qty])=>({id:+id,qty})));
+}
+$('quick').onclick=e=>{const b=e.target.closest('button');if(b){$('bayar').value=b.dataset.v;upd()}};
+$('bayar').oninput=upd;$('seg').onchange=upd;
+$('clear').onclick=()=>{for(const k in cart)delete cart[k];$('bayar').value='';draw()};
+list();draw();
+</script>
+{% endblock %}

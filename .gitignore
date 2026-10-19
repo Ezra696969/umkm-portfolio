@@ -1,0 +1,6 @@
+docs/CATATAN-INTERNAL.md
+.venv/
+__pycache__/
+*.db
+.env
+*.pyc

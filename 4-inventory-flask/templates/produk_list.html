@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Produk{% endblock %}
+{% block body %}
+<div class="head"><h1>Produk</h1><a class="btn" href="{{ url_for('produk_baru') }}">+ Tambah</a></div>
+<form class="filter" method="get">
+  <input name="q" placeholder="Cari nama / SKU…" value="{{ q }}">
+  <select name="kat"><option value="">Semua kategori</option>{% for k in kats %}<option {{ 'selected' if k==kat }}>{{ k }}</option>{% endfor %}</select>
+  <label class="chk"><input type="checkbox" name="low" value="1" {{ 'checked' if low }}> Menipis saja</label>
+  <button class="btn ghost">Cari</button>
+</form>
+<div class="scroll"><table class="grid">
+  <tr><th>SKU</th><th>Nama</th><th>Kategori</th><th class="num">Harga jual</th><th class="num">Stok</th></tr>
+  {% for p in rows %}
+  <tr><td class="mono">{{ p.sku }}</td><td><a href="{{ url_for('produk_detail', pid=p.id) }}">{{ p.nama }}</a></td><td>{{ p.kategori }}</td>
+    <td class="num">{{ p.harga_jual|rp }}</td>
+    <td class="num"><span class="badge {{ 'zero' if p.stok==0 else ('low' if p.stok<=p.stok_min else 'ok') }}">{{ p.stok }}</span></td></tr>
+  {% else %}<tr><td colspan="5" class="muted">Tidak ada produk.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Stokku{% endblock %} — Contoh Kasir &amp; Inventori UMKM</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="demo">Contoh sistem · usaha fiktif "Toko Maju Jaya" · data demo</div>
+{% if session.role %}
+{% set ep = request.endpoint or '' %}
+<div class="shell">
+  <aside>
+    <b class="brand">▦ Stokku</b>
+    <nav>
+      {% if session.role == 'admin' %}<a href="{{ url_for('dashboard') }}" class="{{ 'on' if ep=='dashboard' }}">Dashboard</a>{% endif %}
+      <a href="{{ url_for('kasir') }}" class="{{ 'on' if ep in ('kasir','struk') }}">Kasir</a>
+      <a href="{{ url_for('kasir_riwayat') }}" class="{{ 'on' if ep=='kasir_riwayat' }}">{{ 'Transaksi' if session.role=='admin' else 'Transaksi saya' }}</a>
+      {% if session.role == 'admin' %}
+      <a href="{{ url_for('produk_list') }}" class="{{ 'on' if ep.startswith('produk') }}">Inventori</a>
+      <a href="{{ url_for('riwayat') }}" class="{{ 'on' if ep=='riwayat' }}">Mutasi</a>
+      <a href="{{ url_for('laporan') }}" class="{{ 'on' if ep=='laporan' }}">Laporan</a>
+      <a href="{{ url_for('pengguna') }}" class="{{ 'on' if ep.startswith('pengguna') }}">Pegawai</a>
+      <a href="{{ url_for('export') }}">Ekspor CSV</a>
+      {% endif %}
+    </nav>
+    <form method="post" action="{{ url_for('logout') }}" class="who"><span>{{ session.nama }}<small>{{ session.role }}</small></span>
+      <input type="hidden" name="_csrf" value="{{ csrf() }}"><button class="out">Keluar</button></form>
+  </aside>
+  <main>
+    {% for c,m in get_flashed_messages(with_categories=true) %}<p class="flash {{ c }}">{{ m }}</p>{% endfor %}
+    {% block body %}{% endblock %}
+  </main>
+</div>
+{% else %}
+{% block anon %}{% endblock %}
+{% endif %}
+</body>
+</html>

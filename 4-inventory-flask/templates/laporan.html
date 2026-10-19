@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Laporan penjualan{% endblock %}
+{% block body %}
+<h1>Laporan penjualan</h1>
+<form class="filter" method="get">
+  <label class="chk">Dari <input type="date" name="dari" value="{{ dari }}"></label>
+  <label class="chk">Sampai <input type="date" name="sampai" value="{{ sampai }}"></label>
+  <button class="btn ghost">Tampilkan</button>
+</form>
+<div class="kpis">
+  <div><small>Omzet</small><b>{{ r.omzet|rp }}</b></div>
+  <div><small>Laba kotor</small><b>{{ laba|rp }}</b></div>
+  <div><small>Transaksi</small><b>{{ r.n }}</b></div>
+  <div><small>Rata-rata / transaksi</small><b>{{ ((r.omzet / r.n) if r.n else 0)|rp }}</b></div>
+</div>
+<div class="cols">
+  <section class="panel"><h2>Produk terlaris</h2>
+    {% for l in laris %}<div class="row"><span>{{ l.nama }}</span><span class="badge">{{ l.qty }} terjual</span></div>
+    {% else %}<p class="muted">Belum ada penjualan.</p>{% endfor %}</section>
+  <section class="panel"><h2>Per kasir</h2>
+    {% for k in per_kasir %}<div class="row"><span>{{ k.kasir }}<small>{{ k.n }} transaksi</small></span><b class="mono">{{ k.omzet|rp }}</b></div>
+    {% else %}<p class="muted">Belum ada data.</p>{% endfor %}
+    <h2 style="margin-top:16px">Per hari</h2>
+    {% for h in harian %}<div class="row"><span class="mono">{{ h.tgl }}<small>{{ h.n }} transaksi</small></span><b class="mono">{{ h.omzet|rp }}</b></div>{% endfor %}
+  </section>
+</div>
+<section class="panel"><h2>Daftar transaksi <small class="muted">(100 terakhir pada rentang)</small></h2>
+<div class="scroll"><table>
+  <tr><th>Kode</th><th>Waktu</th><th>Kasir</th><th>Metode</th><th class="num">Total</th><th></th></tr>
+  {% for t in trx %}<tr class="{{ 'voided' if t.status=='batal' }}"><td class="mono"><a href="{{ url_for('struk', sid=t.id) }}">{{ t.kode }}</a></td>
+    <td class="mono">{{ t.waktu|tgl }}</td><td>{{ t.kasir }}</td><td>{{ METODE[t.metode] }}</td><td class="num">{{ t.total|rp }}</td>
+    <td>{% if t.status=='batal' %}<span class="t t-keluar">batal oleh {{ t.dibatalkan_oleh }}</span>{% else %}
+      <form method="post" action="{{ url_for('batal_penjualan', sid=t.id) }}" onsubmit="return confirm('Batalkan {{ t.kode }}? Stok dikembalikan.')">
+      <input type="hidden" name="_csrf" value="{{ csrf() }}"><button class="mini">Batalkan</button></form>{% endif %}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">Tidak ada transaksi.</td></tr>{% endfor %}
+</table></div></section>
+{% endblock %}

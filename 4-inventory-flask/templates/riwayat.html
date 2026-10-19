@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Riwayat{% endblock %}
+{% block body %}
+<h1>Riwayat mutasi <small class="muted">(200 terakhir)</small></h1>
+<div class="scroll"><table class="grid">
+  <tr><th>Waktu</th><th>Produk</th><th>Tipe</th><th class="num">Jumlah</th><th class="num">Stok akhir</th><th>Catatan</th></tr>
+  {% for m in rows %}<tr><td class="mono">{{ m.waktu|tgl }}</td><td><a href="{{ url_for('produk_detail', pid=m.produk_id) }}">{{ m.nama }}</a></td>
+    <td><span class="t t-{{ m.tipe }}">{{ m.tipe }}</span></td><td class="num">{{ m.jumlah }}</td><td class="num">{{ m.stok_akhir }}</td><td class="muted">{{ m.catatan }}</td></tr>
+  {% else %}<tr><td colspan="6" class="muted">Belum ada data.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

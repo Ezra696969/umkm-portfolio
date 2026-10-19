@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block body %}
+<header class="bar"><b class="brand">Dapur <i>Lestari</i></b><a href="#pesan">Pesan</a></header>
+
+<section class="hero">
+  <div>
+    <p class="chip">Katering &amp; nasi box · Kota Contoh</p>
+    <h1>Acara lancar,<br>perut <i>tenang.</i></h1>
+    <p>Pesan H-2, kami masak segar dan antar tepat waktu. Min. 10 porsi untuk antar gratis.</p>
+    <a class="btn" href="#pesan">Buat pesanan</a>
+  </div>
+  <div class="plate" aria-hidden="true">🍱</div>
+</section>
+
+<section>
+  <h2>Pilihan paket</h2>
+  <div class="prods">
+    {% for k,(n,h,d,e) in produk.items() %}
+    <article><span class="em">{{ e }}</span><h3>{{ n }}</h3><p>{{ d }}</p><b>{{ h|rp }}</b></article>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="pesan" class="formwrap">
+  <h2>Form pesanan</h2>
+  {% for c,m in get_flashed_messages(with_categories=true) %}<p class="flash {{ c }}">{{ m }}</p>{% endfor %}
+  <form method="post" action="{{ url_for('pesan') }}" id="f">
+    <input type="hidden" name="_csrf" value="{{ csrf() }}">
+    <label>Nama<input name="nama" required maxlength="80" value="{{ form.nama }}" autocomplete="name"></label>
+    <label>No. WhatsApp<input name="wa" required inputmode="tel" placeholder="0812xxxxxxx" value="{{ form.wa }}" autocomplete="tel"></label>
+    <div class="row">
+      <label>Paket
+        <select name="produk" id="produk" required>
+          <option value="">— pilih —</option>
+          {% for k,(n,h,d,e) in produk.items() %}<option value="{{ k }}" data-h="{{ h }}" {{ 'selected' if form.produk==k }}>{{ n }} — {{ h|rp }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Jumlah<input type="number" name="jumlah" id="jumlah" min="1" max="1000" required value="{{ form.jumlah or 10 }}"></label>
+    </div>
+    <label>Tanggal acara<input type="date" name="tanggal" id="tanggal" required value="{{ form.tanggal }}"></label>
+    <label>Alamat pengantaran<textarea name="alamat" required maxlength="300" rows="2">{{ form.alamat }}</textarea></label>
+    <label>Catatan (opsional)<textarea name="catatan" maxlength="500" rows="2" placeholder="Alergi, pedas/tidak, jam antar…">{{ form.catatan }}</textarea></label>
+    <p class="total">Perkiraan total: <b id="total">Rp0</b></p>
+    <button class="btn" type="submit">Kirim pesanan</button>
+  </form>
+</section>
+
+<footer>© Dapur Lestari — situs contoh/demo untuk portofolio. <a href="{{ url_for('login') }}">Admin</a></footer>
+<script>
+const p=document.getElementById('produk'),j=document.getElementById('jumlah'),t=document.getElementById('total');
+function hit(){const h=+(p.selectedOptions[0]?.dataset.h||0);t.textContent='Rp'+(h*(+j.value||0)).toLocaleString('id-ID')}
+p.onchange=j.oninput=hit;hit();
+document.getElementById('tanggal').min=new Date().toISOString().slice(0,10);
+</script>
+{% endblock %}

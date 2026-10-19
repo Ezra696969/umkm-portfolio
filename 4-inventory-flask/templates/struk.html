@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Struk {{ s.kode }}{% endblock %}
+{% block body %}
+<div class="receipt-wrap">
+  <div class="receipt">
+    <h2>TOKO MAJU JAYA</h2>
+    <p class="c muted">(contoh / fiktif) · Jl. Contoh No. 1</p>
+    <hr>
+    <p class="mono sm">{{ s.kode }}<br>{{ s.waktu|tgl }} · {{ s.kasir }}</p>
+    {% if s.status == 'batal' %}<p class="void">DIBATALKAN</p>{% endif %}
+    <hr>
+    {% for i in items %}
+    <div class="rl"><span>{{ i.nama }}<small class="mono">{{ i.qty }} × {{ i.harga|rp }}</small></span><b class="mono">{{ (i.qty*i.harga)|rp }}</b></div>
+    {% endfor %}
+    <hr>
+    <div class="rl"><span>Total</span><b class="mono">{{ s.total|rp }}</b></div>
+    <div class="rl"><span>{{ METODE[s.metode] }}</span><span class="mono">{{ s.bayar|rp }}</span></div>
+    <div class="rl"><span>Kembali</span><span class="mono">{{ s.kembali|rp }}</span></div>
+    <hr>
+    <p class="c">Terima kasih! 🙏</p>
+  </div>
+  <div class="noprint acts">
+    <button class="btn" onclick="window.print()">Cetak</button>
+    <a class="btn ghost" href="{{ url_for('kasir') }}">Transaksi baru</a>
+  </div>
+</div>
+{% endblock %}
