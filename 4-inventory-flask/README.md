@@ -39,6 +39,22 @@ Tes otomatis (20 tes, tanpa dependensi tambahan):
 - Sandi kasir di-hash (Werkzeug); sandi admin hanya dari `ADMIN_PASSWORD`, tidak disimpan. Pembatasan 5 login gagal/5 menit per IP.
 - CSRF token di semua POST, query berparameter, output di-escape, CSV aman dari injeksi rumus.
 
+## Deploy sebagai demo publik
+
+File siap pakai: `requirements.txt` (Flask + waitress), `wsgi.py`, `Procfile`, `render.yaml`.
+
+| Variabel | Fungsi |
+|---|---|
+| `ADMIN_PASSWORD`, `SECRET_KEY` | Wajib (lihat di atas). |
+| `DEMO_MODE=1` | Mode demo publik: data contoh **direset dan diisi ulang tiap server start**. |
+| `DEMO_HINT` | Teks petunjuk akun demo di halaman login. |
+| `EMBED_DEMO=1` | Cookie `SameSite=None; Secure` agar login jalan di dalam iframe situs portofolio (wajib HTTPS). |
+| `DEMO_KASIR_PASSWORD` | Membuat akun kasir demo (`kasir`) saat mode demo. |
+
+- **Render.com:** New → Blueprint, pilih repo; `render.yaml` sudah berisi semua pengaturan. Isi nilai sandi saat diminta.
+- **PythonAnywhere:** buat web app Flask manual, isi file WSGI dengan `from wsgi import application`, set variabel lingkungan di tab Web.
+- Gunakan sandi khusus demo (bukan sandi asli), karena akan tampil di `DEMO_HINT`.
+
 ## Batasan (jelaskan ke klien)
 - Belum ada diskon/pajak, retur sebagian, shift kasir, atau integrasi printer/QRIS sungguhan (QRIS/transfer hanya dicatat).
 - Pembatas login di memori (1 proses). Produksi: WSGI server (`waitress`/`gunicorn`) + HTTPS, cadangkan `inventori.db` berkala.

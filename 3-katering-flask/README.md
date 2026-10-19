@@ -24,6 +24,21 @@ Buka http://127.0.0.1:5000 — admin di `/admin` (kata sandi = `ADMIN_PASSWORD`)
 | `DB_PATH` | Opsional, lokasi file SQLite (default `pesanan.db`). |
 | `PORT` | Opsional, default 5000. |
 
+## Deploy sebagai demo publik
+
+File siap pakai: `requirements.txt` (Flask + waitress), `wsgi.py`, `Procfile`, `render.yaml`.
+
+| Variabel | Fungsi |
+|---|---|
+| `ADMIN_PASSWORD`, `SECRET_KEY` | Wajib (lihat di atas). |
+| `DEMO_MODE=1` | Mode demo publik: data contoh **direset dan diisi ulang tiap server start**. |
+| `DEMO_HINT` | Teks petunjuk akun demo di halaman login. |
+| `EMBED_DEMO=1` | Cookie `SameSite=None; Secure` agar login jalan di dalam iframe situs portofolio (wajib HTTPS). |
+
+- **Render.com:** New → Blueprint, pilih repo; `render.yaml` sudah berisi semua pengaturan. Isi nilai sandi saat diminta.
+- **PythonAnywhere:** buat web app Flask manual, isi file WSGI dengan `from wsgi import application`, set variabel lingkungan di tab Web.
+- Gunakan sandi khusus demo (bukan sandi asli), karena akan tampil di `DEMO_HINT`.
+
 ## Catatan produksi
 - Jalankan dengan WSGI server (mis. `waitress`/`gunicorn`) di belakang HTTPS; jangan pakai server bawaan Flask.
 - Belum ada pembatasan percobaan login (rate limit) — tambahkan jika dipublikasikan.

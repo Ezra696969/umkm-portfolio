@@ -89,3 +89,5 @@ code{background:#e5e9f2;padding:1px 5px;border-radius:4px;font-size:13px}
  .pos{grid-template-columns:1fr 340px;align-items:start}.items{grid-template-columns:repeat(3,1fr)}
  .cart{position:sticky;top:16px}.kpis.sales{grid-template-columns:1fr 1fr auto auto}}
 main,.catalog,.cart{min-width:0}
+
+.demo-hint{margin-top:14px;background:#fff6e0;color:#6b4a00;border-radius:9px;padding:9px 12px;font-size:13px}

@@ -11,5 +11,6 @@
     <label>Kata sandi<input type="password" name="password" required autocomplete="current-password"></label>
     <button class="btn">Masuk</button>
   </form>
+  {% if DEMO_HINT %}<p class="demo-hint">{{ DEMO_HINT }}</p>{% endif %}
 </div>
 {% endblock %}

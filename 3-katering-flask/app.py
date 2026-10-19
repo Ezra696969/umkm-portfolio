@@ -11,7 +11,7 @@ import io
 import os
 import secrets
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from flask import (Flask, Response, abort, flash, g, redirect, render_template,
                    request, session, url_for)
@@ -191,7 +191,26 @@ def export():
                     headers={"Content-Disposition": "attachment; filename=pesanan.csv"})
 
 
+def seed_demo():
+    """Mode demo publik: hapus semua pesanan lalu isi beberapa pesanan contoh."""
+    contoh = [("Budi Santoso", "081200000001", "nasi-box", 50, "baru", "Acara arisan RT"),
+              ("Siti Aminah", "081200000002", "tumpeng", 2, "diproses", "Syukuran, tanpa pedas"),
+              ("Rina Putri", "081200000003", "snack", 30, "selesai", ""),
+              ("Agus Wijaya", "081200000004", "prasmanan", 80, "baru", "Rapat kantor, jam 11.30")]
+    tgl = (datetime.now() + timedelta(days=3)).strftime("%Y-%m-%d")
+    with sqlite3.connect(DB_PATH) as c:
+        c.execute("DELETE FROM pesanan")
+        for nama, wa, kode, qty, st, cat in contoh:
+            c.execute("INSERT INTO pesanan(dibuat,nama,wa,produk,jumlah,total,tanggal,alamat,catatan,status) VALUES(?,?,?,?,?,?,?,?,?,?)",
+                      (datetime.now().isoformat(timespec="seconds"), nama, wa, kode, qty, PRODUK[kode][1] * qty,
+                       tgl, "Jl. Contoh No. 1, Kota Contoh", cat, st))
+
+
 init_db()
+DEMO = os.environ.get("DEMO_MODE") == "1"  # demo publik: data direset tiap server start
+if DEMO:
+    seed_demo()
+app.jinja_env.globals["DEMO_HINT"] = os.environ.get("DEMO_HINT", "") if DEMO else ""
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=int(os.environ.get("PORT", 5000)), debug=False)

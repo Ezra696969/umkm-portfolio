@@ -9,5 +9,6 @@
     <label>Kata sandi<input type="password" name="password" required autofocus></label>
     <button class="btn" type="submit">Masuk</button>
   </form>
+  {% if DEMO_HINT %}<p class="demo-hint">{{ DEMO_HINT }}</p>{% endif %}
 </main>
 {% endblock %}

@@ -1,0 +1,24 @@
+# Blueprint Render.com (paket gratis). Isi nilai "sync: false" di dashboard Render saat diminta.
+services:
+  - type: web
+    name: stokku-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: waitress-serve --host=0.0.0.0 --port=$PORT app:app
+    healthCheckPath: /login
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: EMBED_DEMO      # cookie SameSite=None agar login jalan di dalam iframe portofolio
+        value: "1"
+      - key: DEMO_MODE       # data contoh diisi ulang tiap server start
+        value: "1"
+      - key: DEMO_HINT       # teks petunjuk di halaman login, mis. "Demo: admin / sandi-demo"
+        value: "Akun demo: lihat petunjuk di situs portofolio"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DEMO_KASIR_PASSWORD
+        sync: false
