@@ -2,72 +2,450 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Warung Bu Ningsih — Contoh Website UMKM</title>
-<meta name="description" content="Contoh desain website warung makan. Bukan klien asli.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warung Bu Ningsih — Masakan Rumahan Sejak 1998</title>
+<meta name="description" content="Warung Bu Ningsih: Masakan rumahan legendaris Jawa Timur. Rawon empuk, ayam kremes, soto ayam, pecel, dan sambal ulek dadakan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="demo">⚠ CONTOH DESAIN — usaha fiktif, bukan klien asli</div>
-<header class="top">
-  <a class="logo" href="#">Warung <em>Bu Ningsih</em></a>
-  <nav><a href="#menu">Menu</a><a href="#galeri">Galeri</a><a href="#lokasi">Lokasi</a></nav>
+
+<!-- Banner Demo Portofolio (Strictly Satu Baris di Tampilan HP) -->
+<aside class="demo-banner" aria-label="Informasi Demo">
+  <div class="banner-inner">
+    <span class="badge-demo">CONTOH DESAIN WEBPAGE</span>
+    <span class="banner-text">Dirancang untuk rumah makan &amp; kuliner lokal asli • Responsif HP &amp; Desktop</span>
+  </div>
+</aside>
+
+<!-- Header & Navigasi -->
+<header class="top-nav" id="topNav">
+  <div class="nav-container">
+    <a class="brand" href="#" aria-label="Warung Bu Ningsih">
+      <div class="brand-symbol">🌶️</div>
+      <div class="brand-text">
+        <span class="brand-title">Warung <em>Bu Ningsih</em></span>
+        <span class="brand-sub">Masakan Rumahan • Est. 1998</span>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="#menu">Menu</a>
+      <a href="#keunggulan">Tentang</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#fasilitas">Fasilitas</a>
+      <a href="#lokasi">Lokasi &amp; Jam</a>
+    </nav>
+    <a class="btn btn-wa-nav" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20saya%20mau%20tanya%20menu%20dan%20pesan%20makanan" target="_blank" rel="noopener">
+      <span>💬</span> Pesan WA
+    </a>
+  </div>
 </header>
 
-<section class="hero">
-  <p class="kicker">Masakan rumahan sejak 1998</p>
-  <h1>Pedasnya bikin<br><span>kangen pulang.</span></h1>
-  <p>Nasi hangat, sambal ulek segar, lauk dimasak tiap pagi. Porsi tidak pelit, harga tetap bersahabat.</p>
-  <div class="cta">
-    <a class="btn" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih%2C%20saya%20mau%20pesan" target="_blank" rel="noopener">💬 Pesan via WhatsApp</a>
-    <a class="btn ghost" href="#menu">Lihat menu</a>
-  </div>
-  <div class="badge" aria-hidden="true">🌶️</div>
-</section>
-
-<section id="menu">
-  <h2>Menu Andalan</h2>
-  <div class="tabs">
-    <button class="on" data-f="all">Semua</button>
-    <button data-f="makan">Makanan</button>
-    <button data-f="minum">Minuman</button>
-  </div>
-  <ul class="menu" id="menuList"></ul>
-  <p class="note">Harga contoh. Pesan 20+ porsi? Chat untuk harga spesial.</p>
-</section>
-
-<section id="galeri" class="alt">
-  <h2>Galeri</h2>
-  <div class="gal">
-    <div style="--c:#c8452b">🍛<small>Nasi Rawon</small></div>
-    <div style="--c:#d6922a">🍗<small>Ayam Goreng</small></div>
-    <div style="--c:#6f8a34">🥬<small>Pecel</small></div>
-    <div style="--c:#8b3a2a">🍲<small>Soto</small></div>
-    <div style="--c:#d9772b">🍤<small>Gorengan</small></div>
-    <div style="--c:#4f7a82">🧋<small>Es Teh</small></div>
-  </div>
-  <p class="note">Ganti kotak ini dengan foto asli usaha Anda.</p>
-</section>
-
-<section id="lokasi">
-  <h2>Jam Buka &amp; Lokasi</h2>
-  <div class="info">
-    <div class="card">
-      <h3>🕐 Jam Buka</h3>
-      <table id="jam"></table>
-      <p id="status" class="status"></p>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="hero-pill">
+        <span class="pill-dot"></span> Masakan Rumahan Tradisional Jawa Timur
+      </div>
+      <h1>Pedasnya Mantap,<br><span class="hero-highlight">Bikin Kangen Pulang.</span></h1>
+      <p class="hero-lead">
+        Nasi pulen hangat, kuah kluwak rawon pekat berempah, dan sambal ulek terasi segar yang dibuat dadakan. Lauk dimasak baru setiap subuh dengan resep warisan keluarga sejak 1998.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20saya%20mau%20pesan%20makanan" target="_blank" rel="noopener">
+          <span>💬</span> Pesan Antar WhatsApp
+        </a>
+        <a class="btn btn-outline" href="#menu">
+          <span>🍽️</span> Lihat Menu &amp; Harga
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <span class="trust-icon">⭐</span>
+          <div>
+            <strong>4.9 / 5.0</strong>
+            <small>450+ Ulasan Pelanggan</small>
+          </div>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-icon">🍲</span>
+          <div>
+            <strong>Dimasak Segar</strong>
+            <small>Tanpa Bahan Pengawet</small>
+          </div>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-icon">📦</span>
+          <div>
+            <strong>Bisa Nasi Kotak</strong>
+            <small>Acara &amp; Katering Kantor</small>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="card">
-      <h3>📍 Alamat</h3>
-      <p>Jl. Contoh Raya No. 12,<br>Kota Contoh, Jawa Timur</p>
-      <div class="map">Peta (contoh) — tempel embed Google Maps di sini</div>
-      <a class="btn small" href="https://wa.me/6281200000000" target="_blank" rel="noopener">💬 Chat WhatsApp</a>
+
+    <div class="hero-visual">
+      <div class="visual-card">
+        <div class="card-img-wrap">
+          <img src="img/rawon.jpg" alt="Seporsi Nasi Rawon Daging Bu Ningsih Lengkap" class="hero-img">
+          <div class="badge-featured">🔥 Paling Laris Hari Ini</div>
+        </div>
+        <div class="visual-card-body">
+          <div class="dish-header">
+            <div>
+              <h3>Nasi Rawon Daging Empuk</h3>
+              <p class="dish-desc-short">Daging sapi empuk, kuah kluwak hitam pekat, tauge, telur asin &amp; sambal</p>
+            </div>
+            <div class="dish-price-badge">Rp28.000</div>
+          </div>
+          <div class="visual-card-footer">
+            <span class="chip-rating">⭐ Favorit Pelanggan</span>
+            <a class="btn-order-inline" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20saya%20mau%20pesan%20Nasi%20Rawon%20Daging%20Empuk" target="_blank" rel="noopener">Pesan Sekarang →</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<footer>© Warung Bu Ningsih — <b>situs contoh/demo</b> untuk portofolio.</footer>
-<a class="fab" href="https://wa.me/6281200000000" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+<!-- Keunggulan Section (Panel dengan Background Foto Masakan + Color Overlay Abu-Abu, Tanpa Emoji) -->
+<section id="keunggulan" class="features-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-kicker">Cita Rasa Asli</span>
+      <h2>Mengapa Pelanggan Setia Memilih Kami?</h2>
+      <p class="section-sub">Lebih dari 25 tahun mempertahankan resep otentik tanpa mengurangi takaran bumbu rempah.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" style="--bg-img: url('img/soto.jpg');">
+        <div class="card-inner">
+          <h3>Masak Segar Tiap Subuh</h3>
+          <p>Semua menu diracik baru setiap pagi. Kami pantang menyajikan lauk simpanan atau kuah sisa kemarin.</p>
+        </div>
+      </div>
+      <div class="feature-card" style="--bg-img: url('img/rawon.jpg');">
+        <div class="card-inner">
+          <h3>Sambal Ulek Dadakan</h3>
+          <p>Cabai rawit merah segar dan terasi bakar pilihan, diulek langsung di atas cobek batu saat Anda memesan.</p>
+        </div>
+      </div>
+      <div class="feature-card" style="--bg-img: url('img/ayam_goreng.jpg');">
+        <div class="card-inner">
+          <h3>Daging Sapi Pilihan Empuk</h3>
+          <p>Daging sapi segar direbus perlahan dengan rempah kluwak berjam-jam hingga seratnya empuk dan bumbu meresap ke dalam.</p>
+        </div>
+      </div>
+      <div class="feature-card" style="--bg-img: url('img/pecel.jpg');">
+        <div class="card-inner">
+          <h3>Porsi Jujur &amp; Mengenyangkan</h3>
+          <p>Porsi mantap khas masakan ibu di rumah. Nasi hangat pulen, lauk melimpah, harga bersahabat di dompet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Andalan Section -->
+<section id="menu" class="menu-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-kicker">Pilihan Menu</span>
+      <h2>Menu Andalan Warung Bu Ningsih</h2>
+      <p class="section-sub">Semua menu disajikan hangat, higienis, dan 100% Halal.</p>
+    </div>
+
+    <!-- Filter Kategori Tabs -->
+    <div class="menu-controls">
+      <div class="tabs" role="tablist">
+        <button class="tab-btn on" data-f="all">Semua Menu</button>
+        <button class="tab-btn" data-f="makan">🍲 Makanan Berat</button>
+        <button class="tab-btn" data-f="camilan">🍤 Lauk &amp; Camilan</button>
+        <button class="tab-btn" data-f="minum">🧋 Minuman Segar</button>
+      </div>
+      <div class="menu-counter" id="menuCount">Menampilkan 8 menu</div>
+    </div>
+
+    <!-- Grid Menu dengan Foto Asli -->
+    <div class="menu-grid" id="menuList">
+      <!-- Di-render dinamis oleh app.js -->
+    </div>
+
+    <div class="catering-banner">
+      <div class="catering-info">
+        <h3>🍱 Melayani Pesanan Nasi Kotak &amp; Acara Syukuran</h3>
+        <p>Butuh konsumsi rapat kantor, arisan, ulang tahun, atau tumpengan? Dapatkan harga hemat &amp; gratis ongkir untuk pemesanan di atas 25 porsi.</p>
+      </div>
+      <a class="btn btn-catering" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20saya%20mau%20konsultasi%20paket%20catering%20/%20nasi%20kotak" target="_blank" rel="noopener">
+        Konsultasi Nasi Kotak
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Galeri Section (Foto Asli Makanan) -->
+<section id="galeri" class="gallery-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-kicker">Galeri Sajian</span>
+      <h2>Dari Dapur Kami ke Meja Anda</h2>
+      <p class="section-sub">Potret hidangan lezat dan segar yang kami sajikan setiap hari di Warung Bu Ningsih.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/rawon.jpg" alt="Nasi Rawon Daging Sapi Empuk" loading="lazy">
+          <span class="gal-tag">Menu Terlaris</span>
+        </div>
+        <div class="gal-info">
+          <h4>Nasi Rawon Daging</h4>
+          <p>Kuah kluwak pekat khas Jawa Timur dengan telur asin masir</p>
+        </div>
+      </article>
+
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/ayam_goreng.jpg" alt="Ayam Goreng Kremes Renyah" loading="lazy">
+          <span class="gal-tag">Favorit Pelanggan</span>
+        </div>
+        <div class="gal-info">
+          <h4>Ayam Goreng Kremes</h4>
+          <p>Ayam bumbu ungkep empuk dengan taburan kremesan bersarang</p>
+        </div>
+      </article>
+
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/pecel.jpg" alt="Pecel Komplit Bumbu Kacang" loading="lazy">
+          <span class="gal-tag">Segar &amp; Sehat</span>
+        </div>
+        <div class="gal-info">
+          <h4>Pecel Komplit Madiun</h4>
+          <p>Sayuran rebus segar disiram bumbu kacang medok kental &amp; peyek</p>
+        </div>
+      </article>
+
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/soto.jpg" alt="Soto Ayam Lamongan Gurih Berempah" loading="lazy">
+          <span class="gal-tag">Hangat &amp; Berkuah</span>
+        </div>
+        <div class="gal-info">
+          <h4>Soto Ayam Lamongan</h4>
+          <p>Kaldu ayam kampung kuning gurih dengan taburan koya gurih</p>
+        </div>
+      </article>
+
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/gorengan.jpg" alt="Aneka Gorengan Renyah Hangat" loading="lazy">
+          <span class="gal-tag">Camilan Khas</span>
+        </div>
+        <div class="gal-info">
+          <h4>Aneka Gorengan</h4>
+          <p>Gorengan gurih renyah hangat disajikan dengan lalapan segar</p>
+        </div>
+      </article>
+
+      <article class="gal-card">
+        <div class="gal-img-box">
+          <img src="img/es_jeruk.jpg" alt="Es Jeruk Peras Segar Dingin" loading="lazy">
+          <span class="gal-tag">Minuman Segar</span>
+        </div>
+        <div class="gal-info">
+          <h4>Es Jeruk Peras Segar</h4>
+          <p>Perasan jeruk manis alami segar dengan es dingin pelepas dahaga</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Fasilitas Section -->
+<section id="fasilitas" class="amenities-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-kicker">Kenyamanan Makan</span>
+      <h2>Fasilitas Warung Kami</h2>
+      <p class="section-sub">Kami mengutamakan kebersihan dan kenyamanan Anda saat bersantap bersama keluarga maupun rekan kerja.</p>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity-item">
+        <div class="amenity-icon">❄️</div>
+        <div>
+          <h4>Tempat Nyaman &amp; Bersih</h4>
+          <p>Ruangan makan tertata rapi, bersih, dan sejuk untuk santap santai.</p>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-icon">🅿️</div>
+        <div>
+          <h4>Area Parkir Luas &amp; Gratis</h4>
+          <p>Tersedia tempat parkir aman untuk kendaraan motor maupun mobil.</p>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-icon">💳</div>
+        <div>
+          <h4>Pembayaran Digital (QRIS)</h4>
+          <p>Menerima QRIS (GoPay, OVO, Dana, BCA, Livin), transfer bank, serta tunai.</p>
+        </div>
+      </div>
+      <div class="amenity-item">
+        <div class="amenity-icon">🛵</div>
+        <div>
+          <h4>Pesan Antar Mudah</h4>
+          <p>Bisa pesan langsung via WhatsApp atau kurir pesanan langganan kami.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Jam Buka & Lokasi Section -->
+<section id="lokasi" class="location-section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-kicker">Kunjungi Kami</span>
+      <h2>Jam Buka &amp; Petunjuk Lokasi</h2>
+      <p class="section-sub">Mampir untuk sarapan, makan siang, atau santap malam bersama keluarga.</p>
+    </div>
+
+    <div class="location-layout">
+      <!-- Kartu Jam Operasional -->
+      <div class="info-card">
+        <div class="card-title-row">
+          <div class="card-icon-bubble">🕐</div>
+          <div>
+            <h3>Jam Operasional</h3>
+            <p class="card-subtext">Buka setiap hari melayani santap di tempat &amp; bungkus</p>
+          </div>
+        </div>
+
+        <div id="statusBadge" class="live-status-badge">
+          <span class="status-indicator"></span>
+          <span id="statusText">Memeriksa status jam operasional...</span>
+        </div>
+
+        <table class="hours-table" id="jamTable">
+          <!-- Diisi otomatis oleh app.js -->
+        </table>
+
+        <div class="order-reminder">
+          💡 <strong>Tips Makan Siang:</strong> Untuk pesanan takeaway di atas 5 porsi saat jam sibuk (11.30–13.00), disarankan memesan 30 menit sebelumnya via WhatsApp.
+        </div>
+      </div>
+
+      <!-- Kartu Alamat & Peta -->
+      <div class="info-card">
+        <div class="card-title-row">
+          <div class="card-icon-bubble">📍</div>
+          <div>
+            <h3>Alamat &amp; Rute</h3>
+            <p class="card-subtext">Mudah diakses di pusat kota dekat area perkantoran</p>
+          </div>
+        </div>
+
+        <address class="address-box">
+          <strong>Warung Bu Ningsih</strong><br>
+          Jl. Gubeng Kertajaya V No. 18, Airlangga, Gubeng<br>
+          Kota Surabaya, Jawa Timur 60286<br>
+          <span class="landmark-hint">📍 <em>Patokan: 150 meter sebelah timur perempatan, depan Apotek Sehat</em></span>
+        </address>
+
+        <!-- Mockup Visual Peta Interaktif / Map Card -->
+        <div class="map-interactive-card">
+          <div class="map-visual-pattern">
+            <div class="map-roads"></div>
+            <div class="map-pin">
+              <span class="pin-pulse"></span>
+              <div class="pin-marker">🌶️</div>
+              <div class="pin-label">Warung Bu Ningsih</div>
+            </div>
+          </div>
+          <div class="map-card-bar">
+            <span>📍 Peta Lokasi Warung Bu Ningsih</span>
+            <a href="https://maps.google.com/?q=Surabaya" target="_blank" rel="noopener" class="map-link-btn">
+              Buka Google Maps ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="action-buttons-group">
+          <a class="btn btn-primary btn-block" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20bisa%20bagikan%20lokasi%20maps%20lengkapnya%3F" target="_blank" rel="noopener">
+            <span>💬</span> Minta Share Location (WhatsApp)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand">
+          <div class="brand-symbol">🌶️</div>
+          <div class="brand-text">
+            <span class="brand-title">Warung <em>Bu Ningsih</em></span>
+            <span class="brand-sub">Masakan Rumahan Sejak 1998</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Menyajikan kehangatan masakan ibu Jawa Timur dengan bahan segar alami, tanpa pengawet, dan harga bersahabat.
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <h4>Navigasi</h4>
+        <ul>
+          <li><a href="#menu">Daftar Menu &amp; Harga</a></li>
+          <li><a href="#keunggulan">Tentang Kami</a></li>
+          <li><a href="#galeri">Galeri Foto Makanan</a></li>
+          <li><a href="#lokasi">Jam Buka &amp; Alamat</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h4>Hubungi Kami</h4>
+        <p><strong>WhatsApp:</strong> 0812-0000-0000</p>
+        <p><strong>Layanan:</strong> Dine-in, Takeaway, Nasi Kotak</p>
+        <p><strong>Buka:</strong> Setiap Hari (07.00 – 21.00 WIB)</p>
+      </div>
+    </div>
+
+    <!-- Lisensi & Hak Cipta Gambar -->
+    <div class="footer-attribution">
+      <details class="attribution-details">
+        <summary>ℹ️ Informasi Lisensi Foto &amp; Desain Portofolio</summary>
+        <p>
+          Halaman ini merupakan situs contoh/demo portofolio untuk UMKM kuliner. Foto makanan menggunakan materi orisinal dan materi berlisensi Creative Commons (CC):
+          <em>Soto Ayam</em> oleh Shinta Amalia (CC BY-SA 4.0),
+          <em>Es Teh</em> oleh Muhammad Reyhand (CC BY-SA 4.0),
+          <em>Wedang Jahe</em> oleh Gunawan Kartapranata (CC BY-SA 4.0 via Wikimedia Commons).
+          Daftar menu dan nama usaha merupakan contoh representatif portofolio.
+        </p>
+      </details>
+      <div class="footer-copyright">
+        © Warung Bu Ningsih — Dikembangkan sebagai Showcase Desain &amp; Website UMKM Modern.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a class="fab-wa" href="https://wa.me/6281200000000?text=Halo%20Bu%20Ningsih,%20saya%20mau%20pesan" target="_blank" rel="noopener" aria-label="Pesan via WhatsApp">
+  <span class="fab-icon">💬</span>
+  <span class="fab-text">Pesan Sekarang</span>
+</a>
+
 <script src="app.js"></script>
 </body>
 </html>
